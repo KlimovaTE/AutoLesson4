@@ -1,5 +1,3 @@
-
-import com.codeborne.selenide.Selectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -8,8 +6,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -33,8 +30,7 @@ public class CardDeliveryTest {
         $("[data-test-id='phone'] input").setValue("+79200000000");
         $("[data-test-id='agreement']").click();
         $("button.button").click();
-        $(byText("Встреча успешно забронирована на")).shouldBe(visible, Duration.ofSeconds(15));
-        $(byText(GenerateDate(3, "dd.MM.yyyy"))).shouldBe(visible);
+        $(".notification__content").shouldHave(text("Встреча успешно забронирована на " + GenerateDate(3, "dd.MM.yyyy")), Duration.ofSeconds(15)).shouldBe(visible);
     }
 
     @Test
@@ -52,7 +48,6 @@ public class CardDeliveryTest {
         $("[data-test-id='phone'] input").setValue("+79200000000");
         $("[data-test-id='agreement']").click();
         $("button.button").click();
-        $(byText("Встреча успешно забронирована на")).shouldBe(visible, Duration.ofSeconds(15));
-        $(byText(GenerateDate(7, "dd.MM.yyyy"))).shouldBe(visible);
+        $("[data-test-id=notification]").shouldHave(text("Успешно! " + "Встреча успешно забронирована на " + GenerateDate(7, "dd.MM.yyyy")), Duration.ofSeconds(15)).shouldBe(visible);
     }
 }
